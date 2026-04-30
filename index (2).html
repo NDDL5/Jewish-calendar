@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="לוח שנה יהודי מלא - הוסף את כל החגים והמועדים היהודים לטלפון שלך בלחיצה אחת">
+  <meta name="theme-color" content="#0A1628">
+  <title>לוח שנה יהודי מלא | Hebrew Jewish Calendar</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Frank+Ruhl+Libre:wght@300;400;700;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --gold: #C9A84C;
+      --gold-light: #E8C97A;
+      --gold-dark: #8B6914;
+      --deep-blue: #0A1628;
+      --navy: #0D1F3C;
+      --navy-mid: #142952;
+      --blue-glow: #1A3A6E;
+      --cream: #F5EDD6;
+      --cream-dark: #E8D5A3;
+      --white: #FAFAF5;
+      --text-light: #D4C09A;
+      --success: #1a4a1a;
+      --success-border: rgba(100,200,100,0.4);
+      --success-text: #90EE90;
+    }
+
+    * { 
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box; 
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      background: var(--deep-blue);
+      color: var(--cream);
+      font-family: 'Heebo', sans-serif;
+      min-height: 100vh;
+      direction: rtl;
+      position: relative;
+    }
+
+    /* Animated starfield background */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: 
+        radial-gradient(1px 1px at 10% 15%, rgba(255,255,255,0.6) 0%, transparent 100%),
+        radial-gradient(1px 1px at 25% 40%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 45% 10%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1px 1px at 60% 60%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 75% 25%, rgba(255,255,255,0.5) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 85% 75%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 90% 45%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1px 1px at 15% 80%, rgba(255,255,255,0.4) 0%, transparent 100%),
+        radial-gradient(1px 1px at 35% 70%, rgba(255,255,255,0.3) 0%, transparent 100%),
+        radial-gradient(1.5px 1.5px at 55% 85%, rgba(255,255,255,0.5) 0%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+      animation: twinkle 8s ease-in-out infinite;
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px 100px;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 60px;
+      animation: fadeDown 0.8s ease forwards;
+    }
+
+    .star-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+      display: block;
+      filter: drop-shadow(0 0 20px rgba(201,168,76,0.8));
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    @keyframes fadeDown {
+      from { 
+        opacity: 0; 
+        transform: translateY(-40px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+
+    .header h1 {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: clamp(36px, 7vw, 60px);
+      font-weight: 900;
+      color: var(--gold);
+      text-shadow: 0 0 40px rgba(201,168,76,0.5), 0 2px 10px rgba(0,0,0,0.5);
+      letter-spacing: 3px;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .header .subtitle {
+      font-size: 17px;
+      color: var(--text-light);
+      font-weight: 300;
+      letter-spacing: 1.5px;
+      margin-top: 8px;
+    }
+
+    .divider {
+      width: 200px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 24px auto;
+    }
+
+    /* Main CTA Section */
+    .cta-section {
+      background: linear-gradient(135deg, var(--navy-mid) 0%, var(--navy) 100%);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 28px;
+      padding: 50px 40px;
+      text-align: center;
+      margin-bottom: 50px;
+      box-shadow: 0 30px 80px rgba(0,0,0,0.6), inset 0 1px 0 rgba(201,168,76,0.2);
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+
+    @media (max-width: 600px) {
+      .cta-section {
+        padding: 32px 24px;
+        border-radius: 20px;
+      }
+    }
+
+    @keyframes fadeUp {
+      from { 
+        opacity: 0; 
+        transform: translateY(40px); 
+      }
+      to { 
+        opacity: 1; 
+        transform: translateY(0); 
+      }
+    }
+
+    .cta-section h2 {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: clamp(24px, 5vw, 34px);
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    .cta-section p {
+      color: var(--text-light);
+      font-size: 15px;
+      margin-bottom: 32px;
+      line-height: 1.8;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .event-count {
+      display: inline-block;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold-light);
+      font-size: 13px;
+      padding: 6px 16px;
+      border-radius: 24px;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      font-weight: 600;
+    }
+
+    /* Device Selection */
+    .device-selector {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+      animation: fadeUp 0.8s ease 0.3s both;
+    }
+
+    .device-btn {
+      background: linear-gradient(135deg, rgba(201,168,76,0.15), rgba(201,168,76,0.05));
+      border: 2px solid rgba(201,168,76,0.3);
+      color: var(--cream);
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-family: 'Heebo', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 1px;
+    }
+
+    .device-btn:hover {
+      background: linear-gradient(135deg, rgba(201,168,76,0.25), rgba(201,168,76,0.15));
+      border-color: var(--gold);
+      color: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .device-btn.active {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      border-color: var(--gold);
+      color: var(--deep-blue);
+      box-shadow: 0 8px 30px rgba(201,168,76,0.4);
+    }
+
+    /* Main CTA Button */
+    .btn-download {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-light) 50%, var(--gold) 100%);
+      color: var(--deep-blue);
+      font-family: 'Heebo', sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      padding: 18px 52px;
+      border-radius: 60px;
+      text-decoration: none;
+      letter-spacing: 1.2px;
+      box-shadow: 0 12px 40px rgba(201,168,76,0.5), 0 4px 12px rgba(0,0,0,0.4);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+      border: none;
+      background-size: 200% 100%;
+      animation: shimmer 3s infinite;
+      position: relative;
+      overflow: hidden;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 100% 0; }
+      50% { background-position: 0% 0; }
+      100% { background-position: 100% 0; }
+    }
+
+    .btn-download:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 50px rgba(201,168,76,0.7), 0 6px 16px rgba(0,0,0,0.5);
+    }
+
+    .btn-download:active {
+      transform: translateY(-1px);
+    }
+
+    .btn-download::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+      0% { left: -100%; }
+      20% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    .instructions {
+      margin-top: 20px;
+      font-size: 13px;
+      color: rgba(212,192,154,0.7);
+      line-height: 1.8;
+    }
+
+    /* How it works */
+    .how-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 60px;
+      animation: fadeUp 0.8s ease 0.4s both;
+    }
+
+    .how-step {
+      background: rgba(13,31,60,0.5);
+      border: 1px solid rgba(201,168,76,0.15);
+      border-radius: 18px;
+      padding: 28px 20px;
+      text-align: center;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .how-step:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201,168,76,0.3);
+    }
+
+    .how-step .step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: rgba(201,168,76,0.2);
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      font-weight: 800;
+      color: var(--gold);
+      font-size: 18px;
+      margin-bottom: 12px;
+    }
+
+    .how-step h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--gold-light);
+      margin-bottom: 8px;
+    }
+
+    .how-step p {
+      font-size: 13px;
+      color: var(--text-light);
+      line-height: 1.6;
+    }
+
+    /* Events Section */
+    .events-section {
+      margin-bottom: 60px;
+      animation: fadeUp 0.8s ease 0.5s both;
+    }
+
+    .section-title {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 28px;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 32px;
+      letter-spacing: 1px;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .event-card {
+      background: linear-gradient(160deg, var(--navy-mid), var(--navy));
+      border: 1px solid rgba(201,168,76,0.2);
+      border-radius: 18px;
+      padding: 24px;
+      transition: all 0.3s ease;
+    }
+
+    .event-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 50px rgba(0,0,0,0.4);
+      border-color: rgba(201,168,76,0.4);
+      background: linear-gradient(160deg, var(--blue-glow), var(--navy-mid));
+    }
+
+    .event-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .event-icon {
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .event-category {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--gold-light);
+    }
+
+    .event-list {
+      list-style: none;
+    }
+
+    .event-list li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(201,168,76,0.08);
+      font-size: 13px;
+    }
+
+    .event-list li:last-child {
+      border-bottom: none;
+    }
+
+    .event-name {
+      color: var(--cream);
+      font-weight: 500;
+    }
+
+    .event-date {
+      color: var(--text-light);
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-right: 8px;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%) translateY(120px);
+      background: linear-gradient(135deg, var(--success), rgba(26,74,26,0.8));
+      border: 1px solid var(--success-border);
+      color: var(--success-text);
+      padding: 16px 32px;
+      border-radius: 60px;
+      font-size: 14px;
+      font-weight: 600;
+      z-index: 2000;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+      padding: 30px 20px;
+      border-top: 1px solid rgba(201,168,76,0.15);
+      color: rgba(212,192,154,0.5);
+      font-size: 12px;
+      line-height: 1.8;
+      animation: fadeUp 0.8s ease 0.8s both;
+    }
+
+    .footer .years {
+      font-family: 'Frank Ruhl Libre', serif;
+      font-size: 16px;
+      color: rgba(201,168,76,0.6);
+      margin-bottom: 8px;
+      letter-spacing: 1px;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px 16px 60px;
+      }
+
+      .cta-section {
+        padding: 32px 20px;
+      }
+
+      .device-selector {
+        flex-direction: column;
+      }
+
+      .device-btn {
+        width: 100%;
+      }
+
+      .header {
+        margin-bottom: 40px;
+      }
+
+      .header h1 {
+        font-size: 32px;
+      }
+
+      .toast {
+        bottom: 20px;
+        left: 20px;
+        right: 20px;
+        transform: translateX(0) translateY(120px);
+        white-space: normal;
+      }
+
+      .toast.show {
+        transform: translateX(0) translateY(0);
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="header">
+    <span class="star-icon">✡</span>
+    <h1>לוח שנה יהודי</h1>
+    <p class="subtitle">Hebrew Jewish Calendar</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="cta-section">
+    <span class="event-count">📅 80+ אירועים יהודיים</span>
+    
+    <h2>הוסף את כל החגים לטלפון בלחיצה אחת</h2>
+    <p>כל החגים, הצומות, ימי הזיכרון וימי המדינה — ישירות ללוח השנה של האייפון או אנדרואיד שלך.</p>
+
+    <div class="device-selector">
+      <button class="device-btn active" onclick="selectDevice('ios')">
+        🍎 &nbsp; iPhone
+      </button>
+      <button class="device-btn" onclick="selectDevice('android')">
+        🤖 &nbsp; Android
+      </button>
+    </div>
+
+    <button class="btn-download" id="downloadBtn" onclick="downloadCalendar()">
+      <span>📥</span>
+      <span>הורד לוח שנה</span>
+    </button>
+
+    <p class="instructions" id="instructions">
+      iPhone: הקובץ יורד ונפתח ב-Calendar ← לחץ "הוסף כל האירועים" ✓
+    </p>
+  </div>
+
+  <div class="how-section">
+    <div class="how-step">
+      <div class="step-num">1</div>
+      <h3>לחץ על הכפתור</h3>
+      <p>הקובץ מוריד אוטומטית — בחרת את הטלפון שלך קודם</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">2</div>
+      <h3>פתח את הקובץ</h3>
+      <p>הטלפון יזהה את קובץ הלוח שנה וישאל איזו אפליקציה</p>
+    </div>
+    <div class="how-step">
+      <div class="step-num">3</div>
+      <h3>אשר הוספה</h3>
+      <p>לחץ "הוסף כל האירועים" — עד 80 חגים בלוח שנה!</p>
+    </div>
+  </div>
+
+  <div class="events-section">
+    <h2 class="section-title">✡ מה כלול בלוח השנה?</h2>
+
+    <div class="events-grid">
+
+      <div class="event-card">
+        <div class="event-header">
+          <span class="event-icon">🕍</span>
+          <span class="event-category">חגים ומועדים</span>
+        </div>
+        <ul class="event-list">
+          <li><span class="event-name">ראש השנה</span><span class="event-date">א'-ב' תשרי</span></li>
+          <li><span class="event-name">יום כיפור</span><span class="event-date">י' תשרי</span></li>
+          <li><span class="event-name">סוכות</span><span class="event-date">ט"ו-כ"ב תשרי</span></li>
+          <li><span class="event-name">שמחת תורה</span><span class="event-date">כ"ב תשרי</span></li>
+          <li><span class="event-name">חנוכה</span><span class="event-date">כ"ה כסלו-ב' טבת</span></li>
+          <li><span class="event-name">ט"ו בשבט</span><span class="event-date">ראש השנה לאילנות</span></li>
+          <li><span class="event-name">פורים</span><span class="event-date">י"ד אדר</span></li>
+          <li><span class="event-name">פסח</span><span class="event-date">ט"ו-כ"ב ניסן</span></li>
+          <li><span class="event-name">שבועות</span><span class="event-date">ו'-ז' סיון</span></li>
+          <li><span class="event-name">ל"ג בעומר</span><span class="event-date">הילולת רשב"י</span></li>
+        </ul>
+      </div>
+
+      <div class="event-card">
+        <div class="event-header">
+          <span class="event-icon">🇮🇱</span>
+          <span class="event-category">ימי מדינה וזיכרון</span>
+        </div>
+        <ul class="event-list">
+          <li><span class="event-name">יום השואה</span><span class="event-date">כ"ז ניסן</span></li>
+          <li><span class="event-name">יום הזיכרון</span><span class="event-date">ד' באייר</span></li>
+          <li><span class="event-name">יום העצמאות</span><span class="event-date">ה' באייר</span></li>
+          <li><span class="event-name">יום ירושלים</span><span class="event-date">כ"ח באייר</span></li>
+        </ul>
+        <div style="border-top: 1px solid rgba(201,168,76,0.1); margin: 16px 0; padding-top: 16px;">
+          <div class="event-header" style="margin-bottom: 12px;">
+            <span class="event-icon">⏰</span>
+            <span class="event-category">צומות</span>
+          </div>
+          <ul class="event-list">
+            <li><span class="event-name">צום גדליה</span><span class="event-date">ג' תשרי</span></li>
+            <li><span class="event-name">עשרה בטבת</span><span class="event-date">י' טבת</span></li>
+            <li><span class="event-name">תענית אסתר</span><span class="event-date">י"ג אדר</span></li>
+            <li><span class="event-name">י"ז בתמוז</span><span class="event-date">ג' שבועות</span></li>
+            <li><span class="event-name">תשעה באב</span><span class="event-date">ט' באב</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="event-card">
+        <div class="event-header">
+          <span class="event-icon">🌙</span>
+          <span class="event-category">ראשי חודשים</span>
+        </div>
+        <ul class="event-list">
+          <li><span class="event-name">כל ראש חודש</span><span class="event-date">בכל חודש</span></li>
+          <li><span class="event-name">בעברית</span><span class="event-date">תשרי עד אלול</span></li>
+          <li><span class="event-name">שבט</span><span class="event-date">ינואר-פברואר</span></li>
+          <li><span class="event-name">אדר</span><span class="event-date">פברואר-מרץ</span></li>
+          <li><span class="event-name">ניסן</span><span class="event-date">מרץ-אפריל</span></li>
+          <li><span class="event-name">אייר</span><span class="event-date">אפריל-מאי</span></li>
+          <li><span class="event-name">סיון</span><span class="event-date">מאי-יוני</span></li>
+          <li><span class="event-name">תמוז</span><span class="event-date">יוני-יולי</span></li>
+          <li><span class="event-name">אב</span><span class="event-date">יולי-אוגוסט</span></li>
+          <li><span class="event-name">אלול</span><span class="event-date">אוגוסט-ספטמבר</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <p class="years">תשפ"ה ✦ תשפ"ו | 2025–2026</p>
+    <p>לוח שנה יהודי מלא — כל האירועים מחושבים לפי הלוח העברי</p>
+    <p>תומך iPhone (Apple Calendar) ו-Android (Google Calendar)</p>
+    <p style="margin-top: 16px; opacity: 0.4;">🔗 שתף את הלינק עם חברים | Made with ❤️</p>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">✅ &nbsp; הקובץ מורד — פתח אותו בטלפון שלך!</div>
+
+<script>
+  let selectedDevice = 'ios';
+
+  function selectDevice(device) {
+    selectedDevice = device;
+    // הסר את active מכל הכפתורים
+    document.querySelectorAll('.device-btn').forEach(btn => btn.classList.remove('active'));
+    
+    // הוסף active לכפתור הנכון
+    const buttons = document.querySelectorAll('.device-btn');
+    if (device === 'ios' && buttons[0]) {
+      buttons[0].classList.add('active');
+    } else if (device === 'android' && buttons[1]) {
+      buttons[1].classList.add('active');
+    }
+    
+    // עדכן הוראות
+    const instr = document.getElementById('instructions');
+    if (device === 'ios') {
+      instr.textContent = '📱 iPhone: הקובץ יורד ונפתח ב-Calendar ← לחץ "הוסף כל האירועים" ✓';
+    } else {
+      instr.textContent = '📱 Android: הקובץ יורד → פתח ב-Google Calendar ← ייבוא אוטומטי ✓';
+    }
+  }
+
+  function downloadCalendar() {
+    const link = document.createElement('a');
+    link.href = 'jewish-calendar.ics';
+    link.download = selectedDevice === 'ios' 
+      ? 'לוח-שנה-יהודי-iphone.ics' 
+      : 'לוח-שנה-יהודי-android.ics';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    
+    showToast();
+  }
+
+  function showToast() {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 4000);
+  }
+
+  // Auto-detect device type
+  const ua = navigator.userAgent.toLowerCase();
+  if (/iphone|ipad|ipod/.test(ua)) {
+    selectDevice('ios');
+    const iosBtn = document.querySelectorAll('.device-btn')[0];
+    if (iosBtn) iosBtn.click();
+  } else if (/android/.test(ua)) {
+    selectDevice('android');
+    const androidBtn = document.querySelectorAll('.device-btn')[1];
+    if (androidBtn) androidBtn.click();
+  }
+</script>
+
+</body>
+</html>
